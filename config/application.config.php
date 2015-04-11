@@ -3,6 +3,7 @@ return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
         'Application',
+        'Post',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
@@ -59,6 +60,6 @@ return array(
     // )
 
    // Initial configuration with which to seed the ServiceManager.
-   // Should be compatible with Zend\ServiceManager\Config.
+   // Should be compatible with Zend\ServiceManager\config.
    // 'service_manager' => array(),
 );
