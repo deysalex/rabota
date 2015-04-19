@@ -5,7 +5,7 @@
  * Date: 11.04.2015
  * Time: 17:56
  */
-namespace User\Model;
+namespace User\Model\Object;
 
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;

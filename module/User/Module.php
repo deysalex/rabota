@@ -7,8 +7,8 @@
  */
 namespace User;
 
-use User\Model\User;
-use User\Model\UserTable;
+use User\Model\Object\User;
+use User\Model\Table\UserTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -37,7 +37,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'User\Model\UserTable' =>  function($sm) {
+                'User\Model\Table\UserTable' =>  function($sm) {
                     $tableGateway = $sm->get('UserTableGateway');
                     $table = new UserTable($tableGateway);
                     return $table;

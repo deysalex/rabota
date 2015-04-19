@@ -9,6 +9,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'User\Controller\User' => 'User\Controller\UserController',
+            'User\Controller\Info' => 'User\Controller\InfoController',
+            'User\Controller\Subscription' => 'User\Controller\SubscriptionController',
         ),
     ),
     'router' => array(
@@ -23,6 +25,34 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'User\Controller\User',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'info' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/info[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Info',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'subscription' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/subscription[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Subscription',
                         'action'     => 'index',
                     ),
                 ),

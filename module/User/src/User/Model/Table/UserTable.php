@@ -5,7 +5,7 @@
  * Date: 11.04.2015
  * Time: 17:57
  */
-namespace User\Model;
+namespace User\Model\Table;
 
 use Zend\Db\TableGateway\TableGateway;
 
