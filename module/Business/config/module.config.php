@@ -8,7 +8,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Business\Controller\User' => 'Business\Controller\VacancyController',
+            'Business\Controller\Vacancy' => 'Business\Controller\VacancyController',
             'Business\Controller\Info' => 'Business\Controller\AgencyController',
             'Business\Controller\Subscription' => 'Business\Controller\ResumeController',
         ),
@@ -61,7 +61,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'user' => __DIR__ . '/../view',
+            'business' => __DIR__ . '/../view',
         ),
     ),
 );

@@ -7,6 +7,7 @@
  */
 namespace Business\Model\Table;
 
+use Business\Model\Object\Vacancy;
 use Zend\Db\TableGateway\TableGateway;
 
 class VacancyTable
@@ -24,7 +25,7 @@ class VacancyTable
         return $resultSet;
     }
 
-    public function getUser($id)
+    public function getById($id)
     {
         $id  = (int) $id;
         $rowset = $this->tableGateway->select(array('id' => $id));
@@ -35,18 +36,20 @@ class VacancyTable
         return $row;
     }
 
-    public function saveUser(User $user)
+    public function save(Vacancy $vacancy)
     {
         $data = array(
-            'artist' => $user->artist,
-            'title'  => $user->title,
+            'title'  => $vacancy->title,
+            'description'  => $vacancy->description,
+            'education'  => $vacancy->education,
+            'price'  => $vacancy->price,
         );
 
-        $id = (int) $user->id;
+        $id = (int) $vacancy->id;
         if ($id == 0) {
             $this->tableGateway->insert($data);
         } else {
-            if ($this->getUser($id)) {
+            if ($this->getById($id)) {
                 $this->tableGateway->update($data, array('id' => $id));
             } else {
                 throw new \Exception('User id does not exist');
@@ -54,7 +57,7 @@ class VacancyTable
         }
     }
 
-    public function deleteUser($id)
+    public function deleteById($id)
     {
         $this->tableGateway->delete(array('id' => (int) $id));
     }

@@ -14,7 +14,7 @@ class VacancyForm extends Form
     public function __construct($name = null)
     {
         // we want to ignore the name passed
-        parent::__construct('user');
+        parent::__construct('vacancy');
 
         $this->add(array(
             'name' => 'id',
@@ -28,10 +28,24 @@ class VacancyForm extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'artist',
+            'name' => 'description',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Artist',
+                'label' => 'Description',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'education',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Education',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'price',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Price',
             ),
         ));
         $this->add(array(

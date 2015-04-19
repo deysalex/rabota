@@ -12,6 +12,6 @@
         "zendframework/zendframework": "~2.3"
     },
     "autoload": {
-      "psr-0": { "Post": "module/Post/src/","User": "module/User/src/" }
+      "psr-0": { "Post": "module/Post/src/","User": "module/User/src/","Business": "module/Business/src/" }
     }
 }

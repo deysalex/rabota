@@ -5,50 +5,50 @@
  * Date: 11.04.2015
  * Time: 15:20
  */
-namespace User\Controller;
+namespace Business\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use User\Model\User;
-use User\Form\UserForm;
+use Business\Model\Object\Vacancy;
+use Business\Form\VacancyForm;
 
-class InfoController extends AbstractActionController
+class VacancyController extends AbstractActionController
 {
-    protected $userTable;
+    protected $vacancyTable;
 
-    public function getUserTable()
+    public function getVacancyTable()
     {
-        if (!$this->userTable) {
+        if (!$this->vacancyTable) {
             $sm = $this->getServiceLocator();
-            $this->userTable = $sm->get('User\Model\Table\UserTable');
+            $this->vacancyTable = $sm->get('Business\Model\Table\VacancyTable');
         }
-        return $this->userTable;
+        return $this->vacancyTable;
     }
 
     public function indexAction()
     {
         return new ViewModel(array(
-            'users' => $this->getUserTable()->fetchAll(),
+            'vacancies' => $this->getVacancyTable()->fetchAll(),
         ));
     }
 
     public function addAction()
     {
-        $form = new UserForm();
+        $form = new VacancyForm();
         $form->get('submit')->setValue('Add');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $user = new User();
-            $form->setInputFilter($user->getInputFilter());
+            $vacancy = new Vacancy();
+            $form->setInputFilter($vacancy->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $user->exchangeArray($form->getData());
-                $this->getUserTable()->saveUser($user);
+                $vacancy->exchangeArray($form->getData());
+                $this->getVacancyTable()->save($vacancy);
 
                 // Redirect to list of posts
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('vacancy');
             }
         }
         return array('form' => $form);
@@ -58,7 +58,7 @@ class InfoController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('user', array(
+            return $this->redirect()->toRoute('vacancy', array(
                 'action' => 'add'
             ));
         }
@@ -66,28 +66,28 @@ class InfoController extends AbstractActionController
         // Get the Post with the specified id.  An exception is thrown
         // if it cannot be found, in which case go to the index page.
         try {
-            $user = $this->getUserTable()->getUser($id);
+            $vacancy = $this->getVacancyTable()->getById($id);
         }
         catch (\Exception $ex) {
-            return $this->redirect()->toRoute('user', array(
+            return $this->redirect()->toRoute('vacancy', array(
                 'action' => 'index'
             ));
         }
 
-        $form  = new UserForm();
-        $form->bind($user);
+        $form  = new VacancyForm();
+        $form->bind($vacancy);
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter($user->getInputFilter());
+            $form->setInputFilter($vacancy->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->getUserTable()->saveUser($user);
+                $this->getVacancyTable()->save($vacancy);
 
                 // Redirect to list of posts
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('vacancy');
             }
         }
 
@@ -101,7 +101,7 @@ class InfoController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('user');
+            return $this->redirect()->toRoute('vacancy');
         }
 
         $request = $this->getRequest();
@@ -110,16 +110,16 @@ class InfoController extends AbstractActionController
 
             if ($del == 'Yes') {
                 $id = (int) $request->getPost('id');
-                $this->getUserTable()->deleteUser($id);
+                $this->getVacancyTable()->deleteById($id);
             }
 
             // Redirect to list of posts
-            return $this->redirect()->toRoute('user');
+            return $this->redirect()->toRoute('vacancy');
         }
 
         return array(
             'id'    => $id,
-            'user' => $this->getUserTable()->getUser($id)
+            'vacancy' => $this->getVacancyTable()->getById($id)
         );
     }
 }

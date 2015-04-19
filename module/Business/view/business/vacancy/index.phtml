@@ -1,28 +1,32 @@
 <?php
 
-$title = 'My users';
+$title = 'My vacancies';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('user', array('action'=>'add'));?>">Add new user</a>
+    <a href="<?php echo $this->url('vacancy', array('action'=>'add'));?>">Add new vacancy</a>
 </p>
 
 <table class="table">
     <tr>
         <th>Title</th>
-        <th>Artist</th>
+        <th>Description</th>
+        <th>Education</th>
+        <th>Price</th>
         <th>&nbsp;</th>
     </tr>
-    <?php foreach ($users as $user) : ?>
+    <?php foreach ($vacancies as $vacancy) : ?>
         <tr>
-            <td><?php echo $this->escapeHtml($user->title);?></td>
-            <td><?php echo $this->escapeHtml($user->artist);?></td>
+            <td><?php echo $this->escapeHtml($vacancy->title);?></td>
+            <td><?php echo $this->escapeHtml($vacancy->description);?></td>
+            <td><?php echo $this->escapeHtml($vacancy->education);?></td>
+            <td><?php echo $this->escapeHtml($vacancy->price);?></td>
             <td>
-                <a href="<?php echo $this->url('user',
-                    array('action'=>'edit', 'id' => $user->id));?>">Edit</a>
-                <a href="<?php echo $this->url('user',
-                    array('action'=>'delete', 'id' => $user->id));?>">Delete</a>
+                <a href="<?php echo $this->url('vacancy',
+                    array('action'=>'edit', 'id' => $vacancy->id));?>">Edit</a>
+                <a href="<?php echo $this->url('vacancy',
+                    array('action'=>'delete', 'id' => $vacancy->id));?>">Delete</a>
             </td>
         </tr>
     <?php endforeach; ?>

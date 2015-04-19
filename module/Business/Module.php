@@ -5,10 +5,10 @@
  * Date: 11.04.2015
  * Time: 14:57
  */
-namespace User;
+namespace Business;
 
-use User\Model\Object\User;
-use User\Model\Table\UserTable;
+use Business\Model\Object\Vacancy;
+use Business\Model\Table\VacancyTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -37,16 +37,16 @@ class Module
     {
         return array(
             'factories' => array(
-                'User\Model\Table\UserTable' =>  function($sm) {
-                    $tableGateway = $sm->get('UserTableGateway');
-                    $table = new UserTable($tableGateway);
+                'Business\Model\Table\VacancyTable' =>  function($sm) {
+                    $tableGateway = $sm->get('VacancyTableGateway');
+                    $table = new VacancyTable($tableGateway);
                     return $table;
                 },
-                'UserTableGateway' => function ($sm) {
+                'VacancyTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new User());
-                    return new TableGateway('Post', $dbAdapter, null, $resultSetPrototype);
+                    $resultSetPrototype->setArrayObjectPrototype(new Vacancy());
+                    return new TableGateway('vacancy', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );

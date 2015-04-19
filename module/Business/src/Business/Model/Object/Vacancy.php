@@ -14,15 +14,20 @@ use Zend\InputFilter\InputFilterInterface;
 class Vacancy implements InputFilterAwareInterface
 {
     public $id;
-    public $artist;
     public $title;
+    public $description;
+    public $education;
+    public $price;
+
     protected $inputFilter;
 
     public function exchangeArray($data)
     {
         $this->id     = (!empty($data['id'])) ? $data['id'] : null;
-        $this->artist = (!empty($data['artist'])) ? $data['artist'] : null;
-        $this->title  = (!empty($data['title'])) ? $data['title'] : null;
+        $this->title = (!empty($data['title'])) ? $data['title'] : null;
+        $this->description = (!empty($data['description'])) ? $data['description'] : null;
+        $this->education = (!empty($data['education'])) ? $data['education'] : null;
+        $this->price = (!empty($data['price'])) ? $data['price'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -44,7 +49,7 @@ class Vacancy implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'artist',
+                'name'     => 'title',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -63,7 +68,45 @@ class Vacancy implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'title',
+                'name'     => 'description',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'education',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'price',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),

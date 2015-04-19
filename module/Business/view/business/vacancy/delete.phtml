@@ -1,23 +1,23 @@
 <?php
 
-$title = 'Delete user';
+$title = 'Delete vacancy';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <p>Are you sure that you want to delete
-    '<?php echo $this->escapeHtml($user->title); ?>' by
-    '<?php echo $this->escapeHtml($user->artist); ?>'?
+    '<?php echo $this->escapeHtml($vacancy->title); ?>' by
+    '<?php echo $this->escapeHtml($vacancy->artist); ?>'?
 </p>
 <?php
-$url = $this->url('user', array(
+$url = $this->url('vacancy', array(
     'action' => 'delete',
     'id'     => $this->id,
 ));
 ?>
 <form action="<?php echo $url; ?>" method="post">
     <div>
-        <input type="hidden" name="id" value="<?php echo (int) $user->id; ?>" />
+        <input type="hidden" name="id" value="<?php echo (int) $vacancy->id; ?>" />
         <input type="submit" name="del" value="Yes" />
         <input type="submit" name="del" value="No" />
     </div>
