@@ -5,50 +5,50 @@
  * Date: 11.04.2015
  * Time: 15:20
  */
-namespace User\Controller;
+namespace Business\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use User\Model\User;
-use User\Form\UserForm;
+use Business\Model\Object\Agency;
+use Business\Form\AgencyForm;
 
-class UserController extends AbstractActionController
+class AgencyController extends AbstractActionController
 {
-    protected $userTable;
+    protected $agencyTable;
 
-    public function getUserTable()
+    public function getAgencyTable()
     {
-        if (!$this->userTable) {
+        if (!$this->agencyTable) {
             $sm = $this->getServiceLocator();
-            $this->userTable = $sm->get('User\Model\UserTable');
+            $this->agencyTable = $sm->get('Business\Model\Table\AgencyTable');
         }
-        return $this->userTable;
+        return $this->agencyTable;
     }
 
     public function indexAction()
     {
         return new ViewModel(array(
-            'users' => $this->getUserTable()->fetchAll(),
+            'agencies' => $this->getAgencyTable()->fetchAll(),
         ));
     }
 
     public function addAction()
     {
-        $form = new UserForm();
+        $form = new AgencyForm();
         $form->get('submit')->setValue('Add');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $user = new User();
-            $form->setInputFilter($user->getInputFilter());
+            $agency = new Agency();
+            $form->setInputFilter($agency->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $user->exchangeArray($form->getData());
-                $this->getUserTable()->saveUser($user);
+                $agency->exchangeArray($form->getData());
+                $this->getAgencyTable()->save($agency);
 
                 // Redirect to list of posts
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('agency');
             }
         }
         return array('form' => $form);
@@ -58,7 +58,7 @@ class UserController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('user', array(
+            return $this->redirect()->toRoute('agency', array(
                 'action' => 'add'
             ));
         }
@@ -66,7 +66,7 @@ class UserController extends AbstractActionController
         // Get the Post with the specified id.  An exception is thrown
         // if it cannot be found, in which case go to the index page.
         try {
-            $user = $this->getUserTable()->getUser($id);
+            $agency = $this->getAgencyTable()->get($id);
         }
         catch (\Exception $ex) {
             return $this->redirect()->toRoute('user', array(
@@ -74,20 +74,20 @@ class UserController extends AbstractActionController
             ));
         }
 
-        $form  = new UserForm();
-        $form->bind($user);
+        $form  = new AgencyForm();
+        $form->bind($agency);
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter($user->getInputFilter());
+            $form->setInputFilter($agency->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->getUserTable()->saveUser($user);
+                $this->getAgencyTable()->save($agency);
 
                 // Redirect to list of posts
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('agency');
             }
         }
 
@@ -101,7 +101,7 @@ class UserController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('user');
+            return $this->redirect()->toRoute('agency');
         }
 
         $request = $this->getRequest();
@@ -110,16 +110,16 @@ class UserController extends AbstractActionController
 
             if ($del == 'Yes') {
                 $id = (int) $request->getPost('id');
-                $this->getUserTable()->deleteUser($id);
+                $this->getAgencyTable()->delete($id);
             }
 
             // Redirect to list of posts
-            return $this->redirect()->toRoute('user');
+            return $this->redirect()->toRoute('agency');
         }
 
         return array(
             'id'    => $id,
-            'user' => $this->getUserTable()->getUser($id)
+            'agency' => $this->getAgencyTable()->get($id)
         );
     }
 }

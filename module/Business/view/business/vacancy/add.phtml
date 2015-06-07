@@ -1,17 +1,56 @@
 <?php
-$title = 'Add new user';
+$title = 'Добавить пользователя';
 $this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<?php
-$form->setAttribute('action', $this->url('vacancy', array('action' => 'add')));
-$form->prepare();
 
-echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('id'));
-echo $this->formRow($form->get('title'));
-echo $this->formRow($form->get('description'));
-echo $this->formRow($form->get('education'));
-echo $this->formRow($form->get('price'));
-echo $this->formSubmit($form->get('submit'));
-echo $this->form()->closeTag();
+$form = $this->form;
+$form->setAttribute('action', $this->url(
+    'vacancy',
+    array(
+        'action' => 'add',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <h1><?php echo $this->escapeHtml($title); ?></h1>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <?php echo $this->form()->openTag($form);?>
+
+                <div class="input-group">
+                    <?php echo $this->formElement($form->get('id'));?>
+                    <?php echo $this->formElement($form->get('title'));?>
+                    <span class="input-group-addon" id="basic-addon2">Заголовок</span>
+                </div>
+                <br>
+                <div class="input-group col-md-12">
+                    <?php echo $this->formElement($form->get('description'));?>
+                </div>
+                <br>
+                <div class="input-group">
+                    <?php echo $this->formElement($form->get('education'));?>
+                    <span class="input-group-addon" id="basic-addon2">Образование</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <?php echo $this->formElement($form->get('price'));?>
+                    <span class="input-group-addon" id="basic-addon2">Оклад</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <?php echo $this->formElement($form->get('submit'));?>
+                </div>
+
+                <?php echo $this->form()->closeTag();?>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

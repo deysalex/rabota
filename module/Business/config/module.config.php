@@ -9,8 +9,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Business\Controller\Vacancy' => 'Business\Controller\VacancyController',
-            'Business\Controller\Info' => 'Business\Controller\AgencyController',
+            'Business\Controller\Agency' => 'Business\Controller\AgencyController',
             'Business\Controller\Subscription' => 'Business\Controller\ResumeController',
+            'Business\Controller\Group' => 'Business\Controller\GroupController',
         ),
     ),
     'router' => array(
@@ -53,6 +54,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Business\Controller\Resume',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'group' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/group[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Business\Controller\Group',
                         'action'     => 'index',
                     ),
                 ),

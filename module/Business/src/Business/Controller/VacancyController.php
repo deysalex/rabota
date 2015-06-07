@@ -35,7 +35,7 @@ class VacancyController extends AbstractActionController
     public function addAction()
     {
         $form = new VacancyForm();
-        $form->get('submit')->setValue('Add');
+        $form->get('submit')->setValue('Сохранить');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -76,7 +76,7 @@ class VacancyController extends AbstractActionController
 
         $form  = new VacancyForm();
         $form->bind($vacancy);
-        $form->get('submit')->setAttribute('value', 'Edit');
+        $form->get('submit')->setAttribute('value', 'Редактировать');
 
         $request = $this->getRequest();
         if ($request->isPost()) {

@@ -14,7 +14,7 @@ class AgencyForm extends Form
     public function __construct($name = null)
     {
         // we want to ignore the name passed
-        parent::__construct('user');
+        parent::__construct('agency');
 
         $this->add(array(
             'name' => 'id',
@@ -28,10 +28,10 @@ class AgencyForm extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'artist',
+            'name' => 'description',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Artist',
+                'label' => 'Description',
             ),
         ));
         $this->add(array(

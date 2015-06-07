@@ -7,10 +7,10 @@
  */
 namespace Business\Model\Table;
 
-use Business\Model\Object\Agency;
+use Business\Model\Object\Group;
 use Zend\Db\TableGateway\TableGateway;
 
-class AgencyTable
+class GroupTable
 {
     protected $tableGateway;
 
@@ -36,21 +36,20 @@ class AgencyTable
         return $row;
     }
 
-    public function save(Agency $agency)
+    public function save(Group $group)
     {
         $data = array(
-            'title'  => $agency->title,
-            'description'  => $agency->description,
+            'name'  => $group->name,
         );
 
-        $id = (int) $agency->id;
+        $id = (int) $group->id;
         if ($id == 0) {
             $this->tableGateway->insert($data);
         } else {
             if ($this->get($id)) {
                 $this->tableGateway->update($data, array('id' => $id));
             } else {
-                throw new \Exception('Agency id does not exist');
+                throw new \Exception('Group id does not exist');
             }
         }
     }

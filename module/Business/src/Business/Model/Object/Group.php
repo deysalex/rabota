@@ -11,18 +11,16 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class Agency implements InputFilterAwareInterface
+class Group implements InputFilterAwareInterface
 {
     public $id;
-    public $title;
-    public $description;
+    public $name;
     protected $inputFilter;
 
     public function exchangeArray($data)
     {
         $this->id     = (!empty($data['id'])) ? $data['id'] : null;
-        $this->title  = (!empty($data['title'])) ? $data['title'] : null;
-        $this->description = (!empty($data['description'])) ? $data['description'] : null;
+        $this->name   = (!empty($data['name'])) ? $data['name'] : null;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -44,7 +42,7 @@ class Agency implements InputFilterAwareInterface
             ));
 
             $inputFilter->add(array(
-                'name'     => 'title',
+                'name'     => 'name',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -57,25 +55,6 @@ class Agency implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min'      => 1,
                             'max'      => 100,
-                        ),
-                    ),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'description',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 5000,
                         ),
                     ),
                 ),
