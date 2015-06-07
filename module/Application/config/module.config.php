@@ -15,7 +15,7 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Post\Controller\Post',
+                        'controller' => 'Business\Controller\Vacancy',
                         'action'     => 'index',
                     ),
                 ),
